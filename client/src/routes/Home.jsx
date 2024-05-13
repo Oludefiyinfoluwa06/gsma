@@ -1,6 +1,13 @@
+import { useAuth } from "../hooks/useAuth";
+
 const Home = () => {
+    const { logout } = useAuth();
+    
     return (
-        <div>Home</div>
+        <div>
+            Home
+            <button onClick={async () => await logout()}>Logout</button>
+        </div>
     );
 }
 

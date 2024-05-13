@@ -1,14 +1,21 @@
-import { useAuth } from '../hooks/useAuth'; 
 import { Navigate } from 'react-router-dom';
 
-const ProtectedRoute = ({ children }) => {
-    const { currentUser } = useAuth();
+export const ProtectedRoute = ({ children }) => {
+    const currentUser = sessionStorage.getItem('user');
 
-    if (currentUser == null) {
-        return <Navigate to='/login' replace/>
+    if (!currentUser) {
+        return <Navigate to='/login' replace />
     }
-
+    
     return children;
 }
 
-export default ProtectedRoute;
+export const PrivateRoute = ({ children }) => {
+    const currentUser = sessionStorage.getItem('user');
+
+    if (!currentUser) {
+        return children;
+    }
+    
+    return <Navigate to='/' replace />
+}

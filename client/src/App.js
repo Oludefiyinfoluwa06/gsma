@@ -1,32 +1,43 @@
 import React from 'react';
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import Login from './routes/auth/Login';
 import Register from './routes/auth/Register';
+import ForgotPassword from './routes/auth/ForgotPassword';
+import ResetPassword from './routes/auth/ResetPassword';
+import Home from './routes/Home';
+import { PrivateRoute, ProtectedRoute } from './routes/ProtectedRoute';
+import NotFound from './components/404';
 
 import RootLayout from './layouts/RootLayout';
-import Home from './routes/Home';
-import ProtectedRoute from './routes/ProtectedRoute';
+import { AuthProvider } from './contexts/AuthContext';
 
-const App = () => {
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <>
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/' element={
-          <ProtectedRoute>
-            <RootLayout />
-          </ProtectedRoute>
-        }>
-          <Route index element={<Home />} />
-        </Route>
-      </>
-    )
-  );
-  
+const App = () => {  
   return (
-    <RouterProvider router={router} />
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path='/login' element={<PrivateRoute>
+            <Login />
+          </PrivateRoute>} />
+          <Route path='/register' element={<PrivateRoute>
+            <Register />
+          </PrivateRoute>} />
+          <Route path='/forgot-password' element={<PrivateRoute>
+            <ForgotPassword />
+          </PrivateRoute>} />
+          <Route path='/reset-password' element={<PrivateRoute>
+            <ResetPassword />
+          </PrivateRoute>} />
+          <Route path='/' element={<ProtectedRoute>
+            <RootLayout />
+          </ProtectedRoute>}>
+            <Route index element={<Home />} />
+          </Route>
+          <Route path='*' element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 

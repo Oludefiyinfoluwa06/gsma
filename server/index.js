@@ -13,9 +13,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect(process.env.dbURI)
-    .then(res => {
-        console.log(res, 'Connection successful')
-        app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+    .then(() => {
+        console.log('Connection successful')
+        app.listen(port, () => console.log(`Server running on port: http://localhost:${port}!`))
     })
     .catch(err => console.log(err, 'Connection unsuccessful'));
 
