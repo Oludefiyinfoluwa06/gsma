@@ -69,14 +69,14 @@ const getOtp = async (req, res) => {
 
         await transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
-                return res.json({ 'error': 'An error occured' });
+                return res.status(400).json({ error: 'An error occured' });
             }
 
-            return res.json({ message: 'OTP sent succesfully', otp: otp });
+            return res.status(201).json({ message: 'OTP sent succesfully', otp: otp });
         });
     } catch (error) {
         console.log(error);
-        return res.json({ error: error.message });
+        return res.status(400).json({ error: error.message });
     }
 }
 

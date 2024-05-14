@@ -14,34 +14,37 @@ import NotFound from './components/404';
 
 import RootLayout from './layouts/RootLayout';
 import { AuthProvider } from './contexts/AuthContext';
+import { ProfileProvider } from './contexts/ProfileContext';
 
 const App = () => {  
   return (
     <Router>
       <AuthProvider>
-        <Routes>
-          <Route path='/login' element={<PrivateRoute>
-            <Login />
-          </PrivateRoute>} />
-          <Route path='/register' element={<PrivateRoute>
-            <Register />
-          </PrivateRoute>} />
-          <Route path='/forgot-password' element={<PrivateRoute>
-            <ForgotPassword />
-          </PrivateRoute>} />
-          <Route path='/reset-password' element={<PrivateRoute>
-            <ResetPassword />
-          </PrivateRoute>} />
-          <Route path='/' element={<ProtectedRoute>
-            <RootLayout />
-          </ProtectedRoute>}>
-            <Route index element={<Home />} />
-            <Route path='events' element={<EventList />} />
-            <Route path='chats' element={<Chat />} />
-            <Route path='profile' element={<Profile />} />
-            <Route path='*' element={<NotFound />} />
-          </Route>
-        </Routes>
+        <ProfileProvider>
+          <Routes>
+            <Route path='/login' element={<PrivateRoute>
+              <Login />
+            </PrivateRoute>} />
+            <Route path='/register' element={<PrivateRoute>
+              <Register />
+            </PrivateRoute>} />
+            <Route path='/forgot-password' element={<PrivateRoute>
+              <ForgotPassword />
+            </PrivateRoute>} />
+            <Route path='/reset-password' element={<PrivateRoute>
+              <ResetPassword />
+            </PrivateRoute>} />
+            <Route path='/' element={<ProtectedRoute>
+              <RootLayout />
+            </ProtectedRoute>}>
+              <Route index element={<Home />} />
+              <Route path='events' element={<EventList />} />
+              <Route path='chats' element={<Chat />} />
+              <Route path='profile' element={<Profile />} />
+              <Route path='*' element={<NotFound />} />
+            </Route>
+          </Routes>
+        </ProfileProvider>
       </AuthProvider>
     </Router>
   );

@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
         try {
             await axios.post('http://localhost:5000/api/auth/signup', { email, password });
 
-            sessionStorage.setItem('user', email);
+            localStorage.setItem('user', email);
             navigate('/');
         } catch (error) {
             setError(error.response.data.error);
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
         try {
             await axios.post('http://localhost:5000/api/auth/login', { email, password });
 
-            sessionStorage.setItem('user', email);
+            localStorage.setItem('user', email);
             navigate('/');
         } catch (error) {
             setError(error.response.data.error);
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const logout = () => {
-        sessionStorage.removeItem('user');
+        localStorage.removeItem('user');
         navigate('/login');
     }
 
@@ -53,8 +53,8 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.post('http://localhost:5000/api/auth/get-otp', { email });
 
             if (response) {
-                sessionStorage.setItem('otp', response.data.otp);
-                sessionStorage.setItem('email', email);
+                localStorage.setItem('otp', response.data.otp);
+                localStorage.setItem('email', email);
                 setNext(true);
             }
         } catch (error) {
@@ -65,23 +65,23 @@ export const AuthProvider = ({ children }) => {
     }
 
     const checkOtp = async (otp) => {
-        const storedOtp = sessionStorage.getItem('otp');
+        const storedOtp = localStorage.getItem('otp');
 
         if (otp !== storedOtp) return setError('Enter the correct OTP');
 
-        sessionStorage.removeItem('otp');
+        localStorage.removeItem('otp');
         navigate('/reset-password');
     }
 
     const resetPassword = async (password) => {
         setLoading(true);
 
-        const email = sessionStorage.getItem('email');
+        const email = localStorage.getItem('email');
 
         try {
             await axios.put('http://localhost:5000/api/auth/reset-password', { email, password });
 
-            sessionStorage.removeItem('email');
+            localStorage.removeItem('email');
             navigate('/login');
         } catch (error) {
             setError(error.response.data.error);

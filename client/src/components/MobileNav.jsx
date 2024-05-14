@@ -15,7 +15,7 @@ const MobileNav = ({ openNav, setOpenNav }) => {
                     const isActive = window.location.pathname === item.route;
 
                     return (
-                        <li className={`${styles.mobileNav} ${isActive ? 'bg-blue-600' : ''}`} onClick={() => {
+                        <li key={item.id} className={`${styles.mobileNav} ${isActive ? 'bg-blue-600' : ''}`} onClick={() => {
                             setOpenNav(false);
                             navigate(`${item.route}`);
                         }}>{item.icon} {item.label}</li>

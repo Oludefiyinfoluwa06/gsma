@@ -20,18 +20,18 @@ const Login = () => {
     }
 
     return (
-        <div className="p-[30px] flex items-center justify-center min-h-screen">
+        <div className="p-[30px] flex items-center justify-center min-h-screen bg-slate-900">
             <div className="flex flex-row items-center justify-center">
-                <form className="w-[350px] sm:w-[500px] lg:w-[600px] border h-full flex flex-col items-center justify-center p-[30px]" onSubmit={handleLogin}>
+                <form className="w-[350px] sm:w-[500px] lg:w-[600px] border h-full flex flex-col items-center justify-center p-[30px] rounded-lg" onSubmit={handleLogin}>
                     <div className="text-center mb-2">
-                        <p className='text-xl'>LOGO</p>
-                        <h1 className="text-[25px] sm:text-[40px] font-bold text-slate-800">Login to your account</h1>
+                        <p className='text-xl text-white'>LOGO</p>
+                        <h1 className="text-[25px] sm:text-[40px] font-bold text-white">Login to your account</h1>
                     </div>
 
                     {error && <p className="text-textError bg-bgError w-full p-2 rounded-md my-[7px]">{error}</p>}
 
                     <div className="flex flex-col mb-2 gap-3 w-full">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email" className='text-white'>Email</label>
                         <input
                             type="email"
                             name="email"
@@ -45,8 +45,8 @@ const Login = () => {
                         />
                     </div>
 
-                    <div className="flex flex-col mb-2 gap-3 w-full">
-                        <label htmlFor="password">Password</label>
+                    <div className="flex flex-col my-2 gap-3 w-full">
+                        <label htmlFor="password" className='text-white'>Password</label>
                         <input 
                             type="password" 
                             name="password" 
@@ -60,12 +60,12 @@ const Login = () => {
                         />
                     </div>
 
-                    <Link to='/forgot-password' className='hover:underline hover:text-slate-800 text-[16px] my-[4px]'>Forgot Password?</Link>
+                    <Link to='/forgot-password' className='hover:underline text-white text-[16px] my-[4px]'>Forgot Password?</Link>
 
-                    <button className="outline-none bg-slate-800 text-white p-[7px] w-full rounded-md my-2 flex items-center justify-center" disabled={loading}>{loading ? <LoadingSpinner /> : 'Sign in'}</button>
+                    <button className="outline-none text-white p-[7px] w-full rounded-md my-2 flex items-center justify-center bg-slate-950" disabled={loading}>{loading ? <LoadingSpinner /> : 'Sign in'}</button>
 
-                    <p>
-                        Don't have an account? <Link to='/register' className='hover:underline hover:text-slate-800 text-[16px] my-[4px]'>Register</Link>
+                    <p className='text-white'>
+                        Don't have an account? <Link to='/register' className='hover:underline text-[16px] my-[4px]'>Register</Link>
                     </p>
                 </form>
             </div>
