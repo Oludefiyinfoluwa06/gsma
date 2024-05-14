@@ -6,6 +6,9 @@ import Register from './routes/auth/Register';
 import ForgotPassword from './routes/auth/ForgotPassword';
 import ResetPassword from './routes/auth/ResetPassword';
 import Home from './routes/Home';
+import EventList from './routes/events/EventList';
+import Chat from './routes/chat/Chat';
+import Profile from './routes/auth/Profile';
 import { PrivateRoute, ProtectedRoute } from './routes/ProtectedRoute';
 import NotFound from './components/404';
 
@@ -33,8 +36,11 @@ const App = () => {
             <RootLayout />
           </ProtectedRoute>}>
             <Route index element={<Home />} />
+            <Route path='events' element={<EventList />} />
+            <Route path='chats' element={<Chat />} />
+            <Route path='profile' element={<Profile />} />
+            <Route path='*' element={<NotFound />} />
           </Route>
-          <Route path='*' element={<NotFound />} />
         </Routes>
       </AuthProvider>
     </Router>

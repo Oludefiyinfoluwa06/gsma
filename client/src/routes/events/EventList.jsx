@@ -1,6 +1,6 @@
 const EventList = () => {
     return (
-        <div>EventList</div>
+        <div className="text-white">EventList</div>
     );
 }
 

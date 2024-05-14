@@ -25,7 +25,7 @@ const Register = () => {
                 <form className="w-[350px] sm:w-[500px] lg:w-[600px] border h-full flex flex-col items-center justify-center p-[30px]" onSubmit={handleRegister}>
                     <div className="text-center mb-2">
                         <p className='text-xl'>LOGO</p>
-                        <h1 className="text-[25px] sm:text-[40px] font-bold">Create an account</h1>
+                        <h1 className="text-[25px] sm:text-[40px] font-bold text-slate-800">Create an account</h1>
                     </div>
 
                     {error && <p className="text-textError bg-bgError w-full p-2 rounded-md my-[7px]">{error}</p>}
@@ -41,7 +41,7 @@ const Register = () => {
                                 setEmail(e.target.value);
                                 setError('');
                             }}
-                            className="bg-gray-100 outline-none py-[5px] px-[7px] rounded-md text-[16px]"
+                            className="bg-slate-100 outline-none py-[5px] px-[7px] rounded-md text-[16px]"
                         />
                     </div>
 
@@ -56,14 +56,14 @@ const Register = () => {
                                 setPassword(e.target.value);
                                 setError('');
                             }}
-                            className="bg-gray-100 outline-none py-[5px] px-[7px] rounded-md text-[16px]" 
+                            className="bg-slate-100 outline-none py-[5px] px-[7px] rounded-md text-[16px]" 
                         />
                     </div>
 
-                    <button className="outline-none bg-black text-white p-[7px] w-full rounded-md my-2 flex items-center justify-center" disabled={loading}>{loading ? <LoadingSpinner /> : 'Register'}</button>
+                    <button className="outline-none bg-slate-800 text-white p-[7px] w-full rounded-md my-2 flex items-center justify-center" disabled={loading}>{loading ? <LoadingSpinner /> : 'Register'}</button>
 
                     <p>
-                        Already have an account? <Link to='/login' className='hover:underline text-[16px] my-[4px]'>Login</Link>
+                        Already have an account? <Link to='/login' className='hover:underline hover:text-slate-800 text-[16px] my-[4px]'>Login</Link>
                     </p>
                 </form>
             </div>
