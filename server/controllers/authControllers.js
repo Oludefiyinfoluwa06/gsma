@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const validator = require('validator');
 const bcrypt = require('bcrypt');
+const nodemailer = require('nodemailer');
 
 const signup = async (req, res) => {
     const { email, password } = req.body;
@@ -47,10 +48,54 @@ const getOtp = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) return res.status(400).json({ error: 'Email does not exist' });
+
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASSWORD
+            }
+        });
+
+        const otp = Math.floor(Math.random() * 900000);
+
+        const mailOptions = {
+            from: 'gsma@gmail.com',
+            to: email,
+            subject: 'Your OTP for email verification',
+            text: `Your OTP is ${otp}`
+        }
+
+        await transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                return res.json({ 'error': 'An error occured' });
+            }
+
+            return res.json({ message: 'OTP sent succesfully', otp: otp });
+        });
+    } catch (error) {
+        console.log(error);
+        return res.json({ error: error.message });
+    }
+}
+
+const resetPassword = async (req, res) => {
+    const { email, password } = req.body;
+
+    if (password.length < 8) return res.status(400).json({ error: 'Password must be 8 characters or more' });
+
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+
+    await User.findOneAndUpdate({ email }, { password: hash });
+
+    return res.json({ message: 'Password updated successfully' });
 }
 
 module.exports = {
     signup,
     login,
     getOtp,
+    resetPassword
 }

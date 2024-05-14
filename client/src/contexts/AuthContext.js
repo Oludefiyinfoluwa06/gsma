@@ -52,9 +52,11 @@ export const AuthProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:5000/api/auth/get-otp', { email });
 
-            sessionStorage.setItem('otp', response.data.otp);
-            sessionStorage.setItem('email', email);
-            setNext(true);
+            if (response) {
+                sessionStorage.setItem('otp', response.data.otp);
+                sessionStorage.setItem('email', email);
+                setNext(true);
+            }
         } catch (error) {
             setError(error.response.data.error);
         } finally {
@@ -63,9 +65,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const checkOtp = async (otp) => {
-        setLoading(true);
-
-        const storedOtp = JSON.parse(sessionStorage.getItem('otp'));
+        const storedOtp = sessionStorage.getItem('otp');
 
         if (otp !== storedOtp) return setError('Enter the correct OTP');
 
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }) => {
         const email = sessionStorage.getItem('email');
 
         try {
-            await axios.post('http://localhost:5000/api/auth/reset-password', { email, password });
+            await axios.put('http://localhost:5000/api/auth/reset-password', { email, password });
 
             sessionStorage.removeItem('email');
             navigate('/login');
