@@ -9,21 +9,21 @@ const ProfileSetup = () => {
     const [major, setMajor] = useState('');
     const [yearOfStudy, setYearOfStudy] = useState('');
     const [studentId, setStudentId] = useState('');
-    const [universityEmail, setUniversityEmail] = useState('');
-    const [profilePicture, setProfilePicture] = useState('');
 
     const { error, setError, profileSetup, loading } = useProfile();
 
-    const email = localStorage.getItem('user');
+    const email = localStorage.getItem('email');
 
     const handleSetupProfile = async (e) => {
         e.preventDefault();
 
-        await profileSetup(email, username, fullname, institutionName, major, yearOfStudy, studentId, universityEmail, profilePicture);
+        setError('');
+
+        await profileSetup(email, username, fullname, institutionName, major, yearOfStudy, studentId);
     }
 
     return (
-        <form className="p-6 w-full" onSubmit={handleSetupProfile} encType="multipart/form-data">
+        <form className="p-6" onSubmit={handleSetupProfile}>
             <legend className="text-[30px] text-white font-bold">Profile Setup</legend>
 
             {error && <p className="text-textError bg-bgError w-full p-2 rounded-md my-[7px]">{error}</p>}
@@ -96,7 +96,7 @@ const ProfileSetup = () => {
                 <div className="flex flex-col mb-2 gap-3 w-full sm:w-1/2">
                     <label htmlFor="yearOfStudy" className='text-white'>Year of study</label>
                     <input
-                        type="text"
+                        type="number"
                         name="yearOfStudy"
                         id="yearOfStudy"
                         value={yearOfStudy}
@@ -124,39 +124,7 @@ const ProfileSetup = () => {
                 </div>
             </div>
 
-            <div className='flex items-center justify-start gap-4 w-full mt-[15px] flex-wrap sm:flex-nowrap'>
-                <div className="flex flex-col mb-2 gap-3 w-full sm:w-1/2">
-                    <label htmlFor="universityEmail" className='text-white'>University Email</label>
-                    <input
-                        type="text"
-                        name="universityEmail"
-                        id="universityEmail"
-                        value={universityEmail}
-                        onChange={(e) => {
-                            setUniversityEmail(e.target.value);
-                            setError('');
-                        }}
-                        className="bg-slate-100 outline-none py-[5px] px-[7px] rounded-md text-[16px]"
-                    />
-                </div>
-
-                <div className="flex flex-col mb-2 gap-3 w-full sm:w-1/2">
-                    <label htmlFor="profilePicture" className='text-white'>Profile Picture</label>
-                    <input
-                        type="file"
-                        name="profilePicture"
-                        id="profilePicture"
-                        value={profilePicture}
-                        onChange={(e) => {
-                            setProfilePicture(e.target.files[0]);
-                            setError('');
-                        }}
-                        className="bg-slate-100 outline-none rounded-md text-[16px]"
-                    />
-                </div>
-            </div>
-
-            <button className="outline-none text-white p-[7px] w-full rounded-md mt-[15px] flex items-center justify-center bg-slate-950" disabled={loading}>{loading ? <LoadingSpinner /> : 'Submit'}</button>
+            <button className="outline-none text-white p-[7px] w-full rounded-md mt-[20px] flex items-center justify-center bg-slate-950" disabled={loading}>{loading ? <LoadingSpinner /> : 'Submit'}</button>
         </form>
     );
 }

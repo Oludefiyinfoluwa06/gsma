@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 
@@ -15,8 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect(process.env.dbURI)
     .then(() => {
-        console.log('Connection successful')
-        app.listen(port, () => console.log(`Server running on port: http://localhost:${port}!`))
+        console.log('Connection successful');
+        app.listen(port, () => console.log(`Server running on port: http://localhost:${port}!`));
     })
     .catch(err => console.log(err, 'Connection unsuccessful'));
 

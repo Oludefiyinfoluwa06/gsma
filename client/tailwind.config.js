@@ -7,7 +7,8 @@ module.exports = {
     extend: {
       colors: {
         textError: '#721c24',
-        bgError: '#f8d7da'
+        bgError: '#f8d7da',
+        transparentBlack: 'rgba(0, 0, 0, 0.65)',
       }
     },
   },

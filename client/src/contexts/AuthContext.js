@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
         try {
             await axios.post('http://localhost:5000/api/auth/signup', { email, password });
 
-            localStorage.setItem('user', email);
+            localStorage.setItem('email', email);
             navigate('/');
         } catch (error) {
             setError(error.response.data.error);
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
         try {
             await axios.post('http://localhost:5000/api/auth/login', { email, password });
 
-            localStorage.setItem('user', email);
+            localStorage.setItem('email', email);
             navigate('/');
         } catch (error) {
             setError(error.response.data.error);
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const logout = () => {
-        localStorage.removeItem('user');
+        localStorage.removeItem('email');
         navigate('/login');
     }
 

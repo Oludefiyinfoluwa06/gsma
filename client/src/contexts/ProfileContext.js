@@ -7,28 +7,26 @@ export const ProfileContext = createContext();
 export const ProfileProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-    const [user, setUser] = useState(null);
 
-    const getUserProfile = async (email) => {
+    const profileSetup = async (email, username, fullname, institutionName, major, yearOfStudy, studentId) => {
         setLoading(true);
 
         try {
-            const response = await axios.get(`http://localhost:5000/api/profile?email=${email}`);
+            await axios.post('http://localhost:5000/api/profile/profile-setup', { email, username, fullname, institutionName, major, yearOfStudy, studentId });
 
-            console.log(response);
-            setUser(response.data.profile);
+            window.location.reload();
         } catch (error) {
-            console.log(error);
+            setError(error.response.data.error);
         } finally {
             setLoading(false);
         }
     }
 
-    const profileSetup = async (email, username, fullname, institutionName, major, yearOfStudy, studentId, universityEmail, profilePicture) => {
+    const profilePictureUpload = async (email, picture) => {
         setLoading(true);
-
+        
         try {
-            const response = await axios.get('http://localhost:5000/api/profile/profile-setup', { email, username, fullname, institutionName, major, yearOfStudy, studentId, universityEmail, profilePicture });
+            const response = await axios.post('http://localhost:5000/api/profile/picture-upload', { email, picture });
 
             console.log(response);
         } catch (error) {
@@ -39,10 +37,9 @@ export const ProfileProvider = ({ children }) => {
     }
 
     const values = {
-        getUserProfile,
         profileSetup,
+        profilePictureUpload,
         loading,
-        user,
         error,
         setError
     }
