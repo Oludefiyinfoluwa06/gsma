@@ -22,11 +22,15 @@ export const ProfileProvider = ({ children }) => {
         }
     }
 
-    const profilePictureUpload = async (email, picture) => {
+    const profilePictureUpload = async (picture) => {
         setLoading(true);
         
         try {
-            const response = await axios.post('http://localhost:5000/api/profile/picture-upload', { email, picture });
+            const response = await axios.post('http://localhost:5000/api/profile/picture-upload', { picture }, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
 
             console.log(response);
         } catch (error) {

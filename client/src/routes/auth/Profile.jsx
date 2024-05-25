@@ -31,27 +31,12 @@ const Profile = () => {
         getUserProfile();
     }, [email]);
 
-    // const convertImgToBase64 = (file) => {
-    //     return new Promise((resolve, reject) => {
-    //         const fileReader = new FileReader();
-
-    //         fileReader.readAsDataURL(file);
-    //         fileReader.onload = () => {
-    //             resolve(fileReader.result);
-    //         }
-
-    //         fileReader.onerror = (error) => {
-    //             reject(error);
-    //         }
-    //     });
-    // }
-
     const handleFileUpload = async (e) => {
         e.preventDefault();
 
         setError('');
 
-        await profilePictureUpload(email, profilePicture);
+        await profilePictureUpload(profilePicture);
     }
 
     return (
@@ -122,7 +107,7 @@ const Profile = () => {
                     <div className="absolute top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] bg-white p-[20px] rounded-md">
                         <FaTimes className='absolute top-[10px] right-[10px] text-slate-800 cursor-pointer' onClick={() => setShowModal(false)} />
 
-                        <form onSubmit={handleFileUpload} encType='multipart/form-data'>
+                        <form onSubmit={handleFileUpload}>
                             {error && <p className="text-textError bg-bgError w-full p-2 rounded-md my-[7px]">{error}</p>}
 
                             <div className="flex flex-col mb-2 gap-3 w-full">
@@ -132,7 +117,6 @@ const Profile = () => {
                                     name="profilePicture"
                                     id="profilePicture"
                                     onChange={async (e) => {
-                                        // const base64 = await convertImgToBase64(e.target.files[0]);
                                         setProfilePicture(e.target.files[0]);
                                         setError('');
                                     }}

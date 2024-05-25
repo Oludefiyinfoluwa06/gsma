@@ -1,5 +1,4 @@
 const UserProfile = require("../models/profile");
-const ProfilePicture = require("../models/profilePic");
 
 const userProfileSetUp = async (req, res) => {
     const { email, username, fullname, institutionName, major, yearOfStudy, studentId } = req.body;
@@ -34,16 +33,16 @@ const profile = async (req, res) => {
     return res.status(200).json({ profile });
 }
 
-const profilePicUpload = async (req, res, next) => {
-    const { email } = req.body;
-    const profilePicture = req.file;
+const profilePicUpload = async (req, res) => {
+    // const { email } = req.body;
+    // console.log(req.body);
+    console.log(req.file);
 
-    console.log(email, profilePicture);
-    // const { email, picture } = req.body;
+    // if (req.file === undefined) return res.status(400).json({ error: 'Select an image' });
 
-    // if (picture === '') return res.status(400).json({ error: 'Upload a picture' });
+    // const imgUrl = `http://localhost:5000/file/${req.file.filename}`;
 
-    // await ProfilePicture.create({ email, picture });
+    // await ProfilePicture.create({ email, imgUrl });
 
     // return res.status(201).json({ message: 'Profile picture updated successfully' });
 }
