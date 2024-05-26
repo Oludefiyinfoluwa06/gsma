@@ -1,4 +1,4 @@
-import { FaCalendar, FaEnvelope, FaHome, FaUser } from "react-icons/fa";
+import { FaCalendar, FaEnvelope, FaHome, FaPlus, FaUser, FaVideo } from "react-icons/fa";
 
 export const styles = {
     sidebarLinks: 'p-3 w-full text-white cursor-pointer flex items-center justify-center md:justify-start gap-2 rounded-lg',
@@ -30,5 +30,39 @@ export const sidebarLinks = [
         route: '/profile',
         label: 'Profile',
         icon: <FaUser className={`${styles.sidebarIcons}`} />
+    },
+];
+
+export const cardTypeList = [
+    {
+        id: 1,
+        title: 'All Events',
+        desc: 'View all events',
+        bgClassName: 'bg-orange-600',
+        icon: <FaCalendar />,
+        route: '/events'
+    },
+    {
+        id: 2,
+        title: 'Create Event',
+        desc: 'Create an event',
+        bgClassName: 'bg-blue-600',
+        icon: <FaPlus />,
+        route: '/events/add'
+    },
+    {
+        id: 3,
+        title: 'Join Event',
+        desc: 'Join a created event',
+        bgClassName: 'bg-purple-600',
+        icon: <FaVideo />,
+    },
+    {
+        id: 4,
+        title: 'Chats',
+        desc: 'View all chats',
+        bgClassName: 'bg-yellow-600',
+        icon: <FaEnvelope />,
+        route: '/chats'
     },
 ];

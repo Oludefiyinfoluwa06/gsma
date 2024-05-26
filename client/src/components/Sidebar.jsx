@@ -13,7 +13,7 @@ const Sidebar = () => {
         <aside className='bg-slate-800 md:w-[200px] sm:block sm:w-[60px] hidden'>
             <ul className="w-full space-y-3 mt-6">
                 {sidebarLinks.map(item => {
-                    const isActive = window.location.pathname === item.route;
+                    const isActive = window.location.pathname === item.route || window.location.pathname.startsWith(`${item.route}/`);
 
                     return (
                         <li key={item.id} className={`${styles.sidebarLinks} ${isActive ? 'bg-blue-600' : ''}`} onClick={() => navigate(`${item.route}`)}>{item.icon} <p className="hidden md:block">{item.label}</p></li>

@@ -12,7 +12,7 @@ const MobileNav = ({ openNav, setOpenNav }) => {
         <aside className={`bg-slate-800 w-[200px] h-[calc(100vh-70px)] absolute ${openNav ? 'left-0' : 'left-[-200px]'} transform transition-all`}>
             <ul className="w-full space-y-3 mt-6">
                 {sidebarLinks.map(item => {
-                    const isActive = window.location.pathname === item.route;
+                    const isActive = window.location.pathname === item.route || window.location.pathname.startsWith(`${item.route}/`);
 
                     return (
                         <li key={item.id} className={`${styles.mobileNav} ${isActive ? 'bg-blue-600' : ''}`} onClick={() => {

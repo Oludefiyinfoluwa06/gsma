@@ -23,6 +23,27 @@ const userProfileSetUp = async (req, res) => {
     return res.status(201).json({ message: 'Profile setup successful' });
 }
 
+const userProfileUpdate = async (req, res) => {
+    const { username, fullname, institutionName, major, yearOfStudy, studentId } = req.body;
+
+    const { email } = req.params;
+
+    if (username === '' || fullname === '' || institutionName === '' || major === '' || yearOfStudy === '' || studentId === '') return res.status(400).json({ error: 'Input fields cannot be empty' });
+
+    const isValidStudentId = (studentId) => {
+        const regex = /^LUC\/[A-Z]+\/[A-Z]+\/\d{2}\/\d{1,3}$/;
+        return regex.test(studentId);
+    }
+
+    const isStudentId = isValidStudentId(studentId);
+
+    if (!isStudentId) return res.status(400).json({ error: 'Enter a valid student ID' });
+
+    await UserProfile.findOneAndUpdate(email, {username, fullname, institutionName, major, yearOfStudy, studentId }, { new: true });
+
+    return res.status(201).json({ message: 'Profile setup successful' });
+}
+
 const profile = async (req, res) => {
     const { email } = req.query;
 
@@ -34,21 +55,18 @@ const profile = async (req, res) => {
 }
 
 const profilePicUpload = async (req, res) => {
-    // const { email } = req.body;
-    // console.log(req.body);
-    console.log(req.file);
+    if (!req.file) {
+        return res.status(400).json('No file uploaded.');
+    }
 
-    // if (req.file === undefined) return res.status(400).json({ error: 'Select an image' });
+    const imgUrl = `http://localhost:5000/api/profile/${req.file.filename}`;
 
-    // const imgUrl = `http://localhost:5000/file/${req.file.filename}`;
-
-    // await ProfilePicture.create({ email, imgUrl });
-
-    // return res.status(201).json({ message: 'Profile picture updated successfully' });
+    return res.status(201).json({ message: 'Profile picture updated successfully', profileImg: imgUrl });
 }
 
 module.exports = {
     userProfileSetUp,
+    userProfileUpdate,
     profile,
     profilePicUpload
 }
