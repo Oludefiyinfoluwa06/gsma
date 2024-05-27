@@ -15,9 +15,9 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            await axios.post('http://localhost:5000/api/auth/signup', { email, password });
+            const response = await axios.post('http://localhost:5000/api/auth/signup', { email, password });
 
-            localStorage.setItem('email', email);
+            localStorage.setItem('token', response.data.token);
             navigate('/');
         } catch (error) {
             setError(error.response.data.error);
@@ -30,9 +30,9 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
 
-            localStorage.setItem('email', email);
+            localStorage.setItem('token', response.data.token);
             navigate('/');
         } catch (error) {
             setError(error.response.data.error);
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     const logout = () => {
-        localStorage.removeItem('email');
+        localStorage.removeItem('token');
         navigate('/login');
     }
 

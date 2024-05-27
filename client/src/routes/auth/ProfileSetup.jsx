@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useProfile } from "../hooks/useProfile";
-import LoadingSpinner from "./common/LoadingSpinner";
+import { useProfile } from "../../hooks/useProfile";
+import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 const ProfileSetup = () => {
     const [username, setUsername] = useState('');
@@ -12,14 +12,12 @@ const ProfileSetup = () => {
 
     const { error, setError, profileSetup, loading } = useProfile();
 
-    const email = localStorage.getItem('email');
-
     const handleSetupProfile = async (e) => {
         e.preventDefault();
 
         setError('');
 
-        await profileSetup(email, username, fullname, institutionName, major, yearOfStudy, studentId);
+        await profileSetup(username, fullname, institutionName, major, yearOfStudy, studentId);
     }
 
     return (

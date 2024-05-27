@@ -10,6 +10,7 @@ import EventList from './routes/events/EventList';
 import CreateEvent from './routes/events/CreateEvent';
 import Chat from './routes/chat/Chat';
 import Profile from './routes/auth/Profile';
+import ProfileSetup from './routes/auth/ProfileSetup';
 import { PrivateRoute, ProtectedRoute } from './routes/ProtectedRoute';
 
 import NotFound from './components/404';
@@ -51,6 +52,7 @@ const App = () => {
               <Route path='chats' element={<Chat />} />
               <Route path='profile' element={<ProfileLayout />}>
                 <Route index element={<Profile />} />
+                <Route path='setup' element={<ProfileSetup />} />
                 <Route path='update' element={<ProfileUpdate />} />
               </Route>
               <Route path='*' element={<NotFound />} />

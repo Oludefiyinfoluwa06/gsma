@@ -16,12 +16,17 @@ const ProfileUpdate = () => {
 
     const navigate = useNavigate();
 
-    const userEmail = localStorage.getItem('email');
-
+    
     useEffect(() => {
+        const token = localStorage.getItem('token');
+
         const getUserProfile = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/profile?email=${userEmail}`);
+                const response = await axios.get('http://localhost:5000/api/profile', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
 
                 setUsername(response.data.profile.username);
                 setFullname(response.data.profile.fullname);
@@ -35,7 +40,7 @@ const ProfileUpdate = () => {
         }
         
         getUserProfile();
-    }, [userEmail]);
+    }, []);
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();

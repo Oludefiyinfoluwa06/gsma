@@ -1,7 +1,15 @@
 const User = require("../models/user");
+const jwt = require('jsonwebtoken');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
+
+const maxAge = 60 * 60 * 24 * 3;
+const createToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: maxAge
+    });
+}
 
 const signup = async (req, res) => {
     const { email, password } = req.body;
@@ -19,9 +27,11 @@ const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    await User.create({ email, password: hash });
+    const user = await User.create({ email, password: hash });
 
-    return res.status(201).json({ message: 'Registration successful' });
+    const token = createToken(user._id);
+
+    return res.status(201).json({ message: 'Registration successful', token });
 }
 
 const login = async (req, res) => {
@@ -37,7 +47,9 @@ const login = async (req, res) => {
 
     if (!passwordMatch) return res.status(400).json({ error: 'Enter a correct password' });
 
-    return res.status(201).json({ message: 'Login successful' });
+    const token = createToken(user._id);
+
+    return res.status(200).json({ message: 'Login successful', token });
 }
 
 const getOtp = async (req, res) => {

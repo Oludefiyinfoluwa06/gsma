@@ -1,13 +1,10 @@
 const UserProfile = require("../models/profile");
+const User = require('../models/user');
 
 const userProfileSetUp = async (req, res) => {
-    const { email, username, fullname, institutionName, major, yearOfStudy, studentId } = req.body;
+    const { username, fullname, institutionName, major, yearOfStudy, studentId } = req.body;
 
-    if (email === '' || username === '' || fullname === '' || institutionName === '' || major === '' || yearOfStudy === '' || studentId === '') return res.status(400).json({ error: 'Input fields cannot be empty' });
-
-    const emailExists = await UserProfile.findOne({ email });
-
-    if (emailExists) return res.status(400).json({ error: 'Email exists already' });
+    if ( username === '' || fullname === '' || institutionName === '' || major === '' || yearOfStudy === '' || studentId === '') return res.status(400).json({ error: 'Input fields cannot be empty' });
 
     const isValidStudentId = (studentId) => {
         const regex = /^LUC\/[A-Z]+\/[A-Z]+\/\d{2}\/\d{1,3}$/;
@@ -18,15 +15,15 @@ const userProfileSetUp = async (req, res) => {
 
     if (!isStudentId) return res.status(400).json({ error: 'Enter a valid student ID' });
 
-    await UserProfile.create({ email, username, fullname, institutionName, major, yearOfStudy, studentId });
+    const user = await User.findById(req.user._id);
+
+    const userProfile = await UserProfile.create({ userId: req.user._id, email: user.email, username, fullname, institutionName, major, yearOfStudy, studentId });
 
     return res.status(201).json({ message: 'Profile setup successful' });
 }
 
 const userProfileUpdate = async (req, res) => {
     const { username, fullname, institutionName, major, yearOfStudy, studentId } = req.body;
-
-    const { email } = req.params;
 
     if (username === '' || fullname === '' || institutionName === '' || major === '' || yearOfStudy === '' || studentId === '') return res.status(400).json({ error: 'Input fields cannot be empty' });
 
@@ -39,17 +36,17 @@ const userProfileUpdate = async (req, res) => {
 
     if (!isStudentId) return res.status(400).json({ error: 'Enter a valid student ID' });
 
-    await UserProfile.findOneAndUpdate(email, {username, fullname, institutionName, major, yearOfStudy, studentId }, { new: true });
+    const user = await User.findById(req.user._id);
 
-    return res.status(201).json({ message: 'Profile setup successful' });
+    await UserProfile.findOneAndUpdate({ userId: req.user._id }, { email: user.email, username, fullname, institutionName, major, yearOfStudy, studentId }, { new: true });
+
+    return res.status(200).json({ message: 'Profile update successful' });
 }
 
 const profile = async (req, res) => {
-    const { email } = req.query;
+    const profile = await UserProfile.findOne({ userId: req.user._id });
 
-    const profile = await UserProfile.findOne({ email });
-
-    if (!profile) return res.status(400).json({ error: 'User profile with this email does not exist' });
+    if (!profile) return res.status(400).json({ error: 'User profile does not exist' });
 
     return res.status(200).json({ profile });
 }

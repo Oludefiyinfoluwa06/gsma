@@ -1,9 +1,10 @@
 import { Navigate } from 'react-router-dom';
 
 export const ProtectedRoute = ({ children }) => {
-    const currentUser = localStorage.getItem('email');
+    const token = localStorage.getItem('token');
+    const currentUser = localStorage.getItem('user');
 
-    if (!currentUser) {
+    if (!currentUser && !token) {
         return <Navigate to='/login' replace />
     }
     
@@ -11,9 +12,10 @@ export const ProtectedRoute = ({ children }) => {
 }
 
 export const PrivateRoute = ({ children }) => {
-    const currentUser = localStorage.getItem('email');
+    const token = localStorage.getItem('token');
+    const currentUser = localStorage.getItem('user');
 
-    if (!currentUser) {
+    if (!currentUser && !token) {
         return children;
     }
     

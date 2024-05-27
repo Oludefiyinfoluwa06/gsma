@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
-import { createContext } from "react";
+import { useState, createContext } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export const ProfileContext = createContext();
 
@@ -9,25 +9,40 @@ export const ProfileProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const userEmail = localStorage.getItem('email');
+    const navigate = useNavigate();
 
     const getUserProfile = async () => {
-        try {
-            const response = await axios.get(`http://localhost:5000/api/profile?email=${userEmail}`);
+        const token = localStorage.getItem('token');
 
+        try {
+            const response = await axios.get('http://localhost:5000/api/profile', {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            
             setUser(response.data.profile);
         } catch (error) {
             console.log(error);
+            if (error.response.data.error === 'User profile does not exist') {
+                navigate('/profile/setup');
+            }
         }
     }
 
-    const profileSetup = async (email, username, fullname, institutionName, major, yearOfStudy, studentId) => {
+    const profileSetup = async (username, fullname, institutionName, major, yearOfStudy, studentId) => {
+        const token = localStorage.getItem('token');
+
         setLoading(true);
 
         try {
-            await axios.post('http://localhost:5000/api/profile/profile-setup', { email, username, fullname, institutionName, major, yearOfStudy, studentId });
+            await axios.post('http://localhost:5000/api/profile/profile-setup', { username, fullname, institutionName, major, yearOfStudy, studentId }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
 
-            window.location.reload();
+            navigate('/profile');
         } catch (error) {
             setError(error.response.data.error);
         } finally {
@@ -36,10 +51,18 @@ export const ProfileProvider = ({ children }) => {
     }
 
     const profileUpdate = async (username, fullname, institutionName, major, yearOfStudy, studentId) => {
+        const token = localStorage.getItem('token');
+
         setLoading(true);
 
         try {
-            await axios.post(`http://localhost:5000/api/profile/profile-update?email=${userEmail}`, { username, fullname, institutionName, major, yearOfStudy, studentId });
+            const response = await axios.post('http://localhost:5000/api/profile/profile-update', { username, fullname, institutionName, major, yearOfStudy, studentId }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            console.log(response);
         } catch (error) {
             setError(error.response.data.error);
         } finally {
@@ -48,6 +71,8 @@ export const ProfileProvider = ({ children }) => {
     }
 
     const profilePictureUpload = async (picture) => {
+        const token = localStorage.getItem('token');
+
         setLoading(true);
 
         const formData = new FormData();
@@ -56,7 +81,8 @@ export const ProfileProvider = ({ children }) => {
         try {
             const response = await axios.post('http://localhost:5000/api/profile/picture-upload', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': `Bearer ${token}`
                 }
             });
 
