@@ -66,3 +66,21 @@ export const cardTypeList = [
         route: '/chats'
     },
 ];
+
+export const eventLinks = [
+    {
+        id: 1,
+        route: '/events',
+        label: 'All Events',
+    },
+    {
+        id: 2,
+        route: '/events/my-events',
+        label: 'My Events',
+    },
+    {
+        id: 3,
+        route: '/events/add',
+        label: 'Create Event',
+    },
+];

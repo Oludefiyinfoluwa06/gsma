@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
+const eventRoutes = require('./routes/eventRoutes');
 
 require('dotenv').config();
 
@@ -34,6 +35,7 @@ mongoose.connect(process.env.dbURI)
 app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/events', eventRoutes);
 app.get('/api/profile/:picture', async (req, res) => {
     try {
         const file = await gfs.files.findOne({ filename: req.params.filename });
@@ -43,7 +45,7 @@ app.get('/api/profile/:picture', async (req, res) => {
         console.log(error);
         res.status(404).json({ error: 'Picture not found' });
     }
-})
+});
 
 app.delete('/api/profile/:picture', async (req, res) => {
     try {
@@ -53,4 +55,4 @@ app.delete('/api/profile/:picture', async (req, res) => {
         console.log(error);
         res.status(400).json({ error: 'An error occurred' });
     }
-})
+});

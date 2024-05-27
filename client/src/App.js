@@ -6,11 +6,13 @@ import Register from './routes/auth/Register';
 import ForgotPassword from './routes/auth/ForgotPassword';
 import ResetPassword from './routes/auth/ResetPassword';
 import Home from './routes/Home';
-import EventList from './routes/events/EventList';
+import AllEvents from './routes/events/AllEvents';
+import MyEvents from './routes/events/MyEvents';
 import CreateEvent from './routes/events/CreateEvent';
 import Chat from './routes/chat/Chat';
 import Profile from './routes/auth/Profile';
 import ProfileSetup from './routes/auth/ProfileSetup';
+import ProfileUpdate from './routes/auth/ProfileUpdate';
 import { PrivateRoute, ProtectedRoute } from './routes/ProtectedRoute';
 
 import NotFound from './components/404';
@@ -21,43 +23,46 @@ import ProfileLayout from './layouts/ProfileLayout';
 
 import { AuthProvider } from './contexts/AuthContext';
 import { ProfileProvider } from './contexts/ProfileContext';
-import ProfileUpdate from './routes/auth/ProfileUpdate';
+import { EventProvider } from './contexts/EventContext';
 
 const App = () => {  
   return (
     <Router>
       <AuthProvider>
         <ProfileProvider>
-          <Routes>
-            <Route path='/login' element={<PrivateRoute>
-              <Login />
-            </PrivateRoute>} />
-            <Route path='/register' element={<PrivateRoute>
-              <Register />
-            </PrivateRoute>} />
-            <Route path='/forgot-password' element={<PrivateRoute>
-              <ForgotPassword />
-            </PrivateRoute>} />
-            <Route path='/reset-password' element={<PrivateRoute>
-              <ResetPassword />
-            </PrivateRoute>} />
-            <Route path='/' element={<ProtectedRoute>
-              <RootLayout />
-            </ProtectedRoute>}>
-              <Route index element={<Home />} />
-              <Route path='events' element={<EventLayout />}>
-                <Route index element={<EventList />} />
-                <Route path='add' element={<CreateEvent />} />
+          <EventProvider>
+            <Routes>
+              <Route path='/login' element={<PrivateRoute>
+                <Login />
+              </PrivateRoute>} />
+              <Route path='/register' element={<PrivateRoute>
+                <Register />
+              </PrivateRoute>} />
+              <Route path='/forgot-password' element={<PrivateRoute>
+                <ForgotPassword />
+              </PrivateRoute>} />
+              <Route path='/reset-password' element={<PrivateRoute>
+                <ResetPassword />
+              </PrivateRoute>} />
+              <Route path='/' element={<ProtectedRoute>
+                <RootLayout />
+              </ProtectedRoute>}>
+                <Route index element={<Home />} />
+                <Route path='events' element={<EventLayout />}>
+                  <Route index element={<AllEvents />} />
+                  <Route path='my-events' element={<MyEvents />} />
+                  <Route path='add' element={<CreateEvent />} />
+                </Route>
+                <Route path='chats' element={<Chat />} />
+                <Route path='profile' element={<ProfileLayout />}>
+                  <Route index element={<Profile />} />
+                  <Route path='setup' element={<ProfileSetup />} />
+                  <Route path='update' element={<ProfileUpdate />} />
+                </Route>
+                <Route path='*' element={<NotFound />} />
               </Route>
-              <Route path='chats' element={<Chat />} />
-              <Route path='profile' element={<ProfileLayout />}>
-                <Route index element={<Profile />} />
-                <Route path='setup' element={<ProfileSetup />} />
-                <Route path='update' element={<ProfileUpdate />} />
-              </Route>
-              <Route path='*' element={<NotFound />} />
-            </Route>
-          </Routes>
+            </Routes>
+          </EventProvider>
         </ProfileProvider>
       </AuthProvider>
     </Router>

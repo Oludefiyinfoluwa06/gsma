@@ -9,7 +9,6 @@ const userProfileSchema = new mongoose.Schema({
     major: String,
     yearOfStudy: String,
     studentId: String,
-    profilePicture: String,
 });
 
 const UserProfile = mongoose.model('userProfiles', userProfileSchema);
