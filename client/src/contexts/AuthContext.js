@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.post('http://localhost:5000/api/auth/signup', { email, password });
 
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', response.data.user);
             navigate('/');
         } catch (error) {
             setError(error.response.data.error);
@@ -33,6 +34,7 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
 
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user', response.data.user);
             navigate('/');
         } catch (error) {
             setError(error.response.data.error);
@@ -43,6 +45,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         navigate('/login');
     }
 

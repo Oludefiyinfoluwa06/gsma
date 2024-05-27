@@ -9,6 +9,7 @@ import Home from './routes/Home';
 import AllEvents from './routes/events/AllEvents';
 import MyEvents from './routes/events/MyEvents';
 import CreateEvent from './routes/events/CreateEvent';
+import EventDetails from './routes/events/EventDetails';
 import Chat from './routes/chat/Chat';
 import Profile from './routes/auth/Profile';
 import ProfileSetup from './routes/auth/ProfileSetup';
@@ -24,6 +25,7 @@ import ProfileLayout from './layouts/ProfileLayout';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProfileProvider } from './contexts/ProfileContext';
 import { EventProvider } from './contexts/EventContext';
+import EditEvent from './routes/events/EditEvent';
 
 const App = () => {  
   return (
@@ -52,6 +54,8 @@ const App = () => {
                   <Route index element={<AllEvents />} />
                   <Route path='my-events' element={<MyEvents />} />
                   <Route path='add' element={<CreateEvent />} />
+                  <Route path=':id' element={<EventDetails />} />
+                  <Route path=':id/edit' element={<EditEvent />} />
                 </Route>
                 <Route path='chats' element={<Chat />} />
                 <Route path='profile' element={<ProfileLayout />}>

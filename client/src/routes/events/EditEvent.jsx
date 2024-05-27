@@ -1,31 +1,54 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 import { useEvent } from '../../hooks/useEvent';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
-const CreateEvent = () => {
+const EditEvent = () => {
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [description, setDescription] = useState('');
 
-    const { createEvent, error, setError, loading } = useEvent();
+    const { editEvent, error, setError, loading } = useEvent();
+
+    const { id } = useParams();
+
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
-        setError('');
-    }, [setError]);
+        const getEventDetails = async () => {
+            try { 
+                const response = await axios.get(`http://localhost:5000/api/events/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                setTitle(response.data.event.title);
+                setDate(response.data.event.date.split('T')[0]);
+                setDescription(response.data.event.description);
+            } catch (error) {
+                console.log(error);
+                setError(error.response.data.error);
+            }
+        }
+
+        getEventDetails();
+    }, [id, setError, token]);
     
-    const handleCreateEvent = async (e) => {
+    const handleEditEvent = async (e) => {
         e.preventDefault();
 
         setError('');
 
-        await createEvent(title, description, date);
+        await editEvent(id, title, description, date);
     }
     
     return (
         <div className="w-full overflow-y-auto no-scrollbar p-6 md:pl-2">
-            <form className="p-6" onSubmit={handleCreateEvent}>
-                <legend className="text-[30px] text-white font-bold">Create Event</legend>
+            <form className="p-6" onSubmit={handleEditEvent}>
+                <legend className="text-[30px] text-white font-bold">Edit Event</legend>
 
                 {error && <p className="text-textError bg-bgError w-full p-2 rounded-md my-[7px]">{error}</p>}
 
@@ -64,6 +87,7 @@ const CreateEvent = () => {
                 <div className="flex flex-col mb-2 gap-3 w-full">
                     <label htmlFor="description" className='text-white'>Description</label>
                     <textarea
+                        value={description}
                         onChange={(e) => {
                             setError('');
                             setDescription(e.target.value);
@@ -78,4 +102,4 @@ const CreateEvent = () => {
     );
 }
 
-export default CreateEvent;
+export default EditEvent;

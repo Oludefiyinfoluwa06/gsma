@@ -31,7 +31,7 @@ const signup = async (req, res) => {
 
     const token = createToken(user._id);
 
-    return res.status(201).json({ message: 'Registration successful', token });
+    return res.status(201).json({ message: 'Registration successful', token, user: user._id });
 }
 
 const login = async (req, res) => {
@@ -49,7 +49,7 @@ const login = async (req, res) => {
 
     const token = createToken(user._id);
 
-    return res.status(200).json({ message: 'Login successful', token });
+    return res.status(200).json({ message: 'Login successful', token, user: user._id });
 }
 
 const getOtp = async (req, res) => {

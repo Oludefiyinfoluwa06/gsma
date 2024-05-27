@@ -23,7 +23,6 @@ export const ProfileProvider = ({ children }) => {
             
             setUser(response.data.profile);
         } catch (error) {
-            console.log(error);
             if (error.response.data.error === 'User profile does not exist') {
                 navigate('/profile/setup');
             }
