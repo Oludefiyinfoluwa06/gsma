@@ -36,11 +36,17 @@ const ProfileUpdate = () => {
                 setStudentId(response.data.profile.studentId);
             } catch (error) {
                 console.log(error);
+
+                if (error.response.data === 'Please, authenticate') {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                    return navigate('/login');
+                }
             }
         }
         
         getUserProfile();
-    }, []);
+    }, [navigate]);
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();

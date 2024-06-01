@@ -5,8 +5,22 @@ const createEvent = async (req, res) => {
 
     if (!title || !description || !date) return res.status(400).json({ error: 'Input fields cannot be empty' });
 
-    await Event.create({ title, description, date, createdBy: req.user._id });
+    const eventYear = date.split('-')[0];
+    const eventMonth = date.split('-')[1];
+    const eventDay = date.split('-')[2];
 
+    const presentYear = new Date().getFullYear();
+    const presentMonth = new Date().getMonth();
+    const presentDay = new Date().getDate();
+
+    if ((eventYear < presentYear)) return res.status(400).json({ error: 'Select a date in the future' });
+
+    if ((eventYear === presentYear) && (eventMonth - 1 < presentMonth)) return res.status(400).json({ error: 'Select a date in the future' });
+
+    if ((eventMonth - 1 === presentMonth) && (eventDay < presentDay)) return res.status(400).json({ error: 'Select a date in the future' });
+
+    await Event.create({ title, description, date, createdBy: req.user._id });
+    
     return res.status(201).json({ message: 'Event created successfully' });
 }
 
@@ -37,6 +51,22 @@ const editEvent = async (req, res) => {
     const { id } = req.params;
 
     if (!title || !description || !date) return res.status(400).json({ error: 'Input fields cannot be empty' });
+
+    const eventYear = date.split('-')[0];
+    const eventMonth = date.split('-')[1];
+    const eventDay = date.split('-')[2];
+
+    const presentYear = new Date().getFullYear();
+    const presentMonth = new Date().getMonth();
+    const presentDay = new Date().getDate();
+
+    if ((eventYear < presentYear)) return res.status(400).json({ error: 'Select a date in the future' });
+
+    if (eventYear === presentYear) {
+        if ((eventMonth - 1 < presentMonth) || (eventDay < presentDay)) {
+            return res.status(400).json({ error: 'Select a date in the future' });
+        }
+    }
 
     await Event.findByIdAndUpdate(id, { title, description, date, createdBy: req.user._id }, { new: true });
 

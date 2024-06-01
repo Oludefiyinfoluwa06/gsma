@@ -23,9 +23,17 @@ export const ProfileProvider = ({ children }) => {
             
             setUser(response.data.profile);
         } catch (error) {
+            console.log(error)
+            if (error.response.data === 'Please, authenticate') {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                return navigate('/login');
+            }
+
             if (error.response.data.error === 'User profile does not exist') {
                 navigate('/profile/setup');
             }
+
         }
     }
 
@@ -44,6 +52,12 @@ export const ProfileProvider = ({ children }) => {
             navigate('/profile');
         } catch (error) {
             setError(error.response.data.error);
+
+            if (error.response.data === 'Please, authenticate') {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                return navigate('/login');
+            }
         } finally {
             setLoading(false);
         }
@@ -64,6 +78,12 @@ export const ProfileProvider = ({ children }) => {
             console.log(response);
         } catch (error) {
             setError(error.response.data.error);
+
+            if (error.response.data === 'Please, authenticate') {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                return navigate('/login');
+            }
         } finally {
             setLoading(false);
         }

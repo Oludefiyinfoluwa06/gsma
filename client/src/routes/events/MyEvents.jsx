@@ -20,7 +20,7 @@ const MyEvents = () => {
                     {myEvents.map(event => (
                         <div key={event._id} onClick={() => navigate(`/events/${event._id}`)} className="mb-3 cursor-pointer bg-[rgba(255,255,255,0.25)] p-2 rounded-md">
                             <h1 className="md:text-[20px] text-[14px] font-bold">{event.title}</h1>
-                            <p className="md:text-[15px] text-[13px] text-ellipsis">{event.description}</p>
+                            <p className="md:text-[15px] text-[13px] text-ellipsis mt-1">{(event.date.split('T')[0].split('-')[0] < new Date().getFullYear()  || event.date.split('T')[0].split('-')[1] < new Date().getMonth() || event.date.split('T')[0].split('-')[2] < new Date().getDate()) ? 'Took' : 'Taking'} place on: {event.date.split('T')[0]}</p>
                         </div>
                     ))}
                 </div>

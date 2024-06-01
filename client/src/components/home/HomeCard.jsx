@@ -7,7 +7,17 @@ const HomeCard = () => {
     const [showModal, setShowModal] = useState(false);
 
     const [eventId, setEventId] = useState('');
+    const [error, setError] = useState('');
+
     const navigate = useNavigate();
+
+    const handleJoinMeeting = (e) => {
+        e.preventDefault();
+
+        if (!eventId) return setError('Input the event\'s id');
+
+        navigate(`/meeting/${eventId}`);
+    }
     
     return (
         <>
@@ -28,9 +38,12 @@ const HomeCard = () => {
                     <div className="absolute top-[50%] left-[50%] transform translate-x-[-50%] translate-y-[-50%] bg-white p-[20px] rounded-md md:w-[600px] w-[300px]">
                         <FaTimes className='absolute top-[10px] right-[10px] text-slate-800 cursor-pointer' onClick={() => setShowModal(false)} />
 
-                        <form>
+                        <form onSubmit={handleJoinMeeting}>
                             <div className="flex flex-col mb-2 gap-3 w-full">
                                 <label htmlFor="eventId" className='text-slate-950 text-[25px] font-bold'>Event ID</label>
+
+                                {error && <p className="text-textError bg-bgError w-full p-2 rounded-md my-[7px]">{error}</p>}
+
                                 <input
                                     type="text"
                                     name="eventId"

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { createEvent, getAllEvents, getMyEvents, getEventDetails, editEvent, deleteEvent } = require('../controllers/eventController');
+const { createEvent, getAllEvents, getMyEvents, getEventDetails, editEvent, deleteEvent, startMeeting } = require('../controllers/eventController');
 const { authenticate } = require('../middlewares/auth');
 
 router.post('/create', authenticate, createEvent);

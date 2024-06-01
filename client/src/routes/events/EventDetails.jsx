@@ -10,7 +10,7 @@ const EventDetails = () => {
     const [showOptions, setShowOptions] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const meetingLink = `http://localhost:5000/events/meeting/${id}`;
+    const meetingLink = `http://localhost:3000/meeting/${id}`;
 
 
     const { getEventDetails, event, error, setError, deleteEvent } = useEvent();
@@ -56,7 +56,7 @@ const EventDetails = () => {
                     </div>
                     <p className="mt-2">{event.description}</p>
 
-                    {user === event.createdBy && <button className='mt-3 text-[18px] font-bold bg-slate-100 text-slate-800 px-[20px] py-[8px] rounded-lg'>Start meeting</button>}
+                    {user === event.createdBy ? <button className='mt-3 text-[18px] font-bold bg-slate-100 text-slate-800 px-[20px] py-[8px] rounded-lg' onClick={() => navigate(`/meeting/${id}`)}>Start meeting</button> : <button className='mt-3 text-[18px] font-bold bg-slate-100 text-slate-800 px-[20px] py-[8px] rounded-lg' onClick={() => navigate(`/meeting/${id}`)}>Join meeting</button>}
                 </div>
             </div>
 
@@ -78,7 +78,7 @@ const EventDetails = () => {
                                     name="meetingLink"
                                     id="meetingLink"
                                     value={meetingLink}
-                                    disabled
+                                    readOnly
                                     className="bg-slate-100 outline-none rounded-md text-[16px] p-2 text-gray-600"
                                 />
                             </div>

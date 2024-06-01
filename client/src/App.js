@@ -10,10 +10,12 @@ import AllEvents from './routes/events/AllEvents';
 import MyEvents from './routes/events/MyEvents';
 import CreateEvent from './routes/events/CreateEvent';
 import EventDetails from './routes/events/EventDetails';
+import EditEvent from './routes/events/EditEvent';
 import Chat from './routes/chat/Chat';
 import Profile from './routes/auth/Profile';
 import ProfileSetup from './routes/auth/ProfileSetup';
 import ProfileUpdate from './routes/auth/ProfileUpdate';
+import MeetingRoom from './routes/MeetingRoom';
 import { PrivateRoute, ProtectedRoute } from './routes/ProtectedRoute';
 
 import NotFound from './components/404';
@@ -25,7 +27,6 @@ import ProfileLayout from './layouts/ProfileLayout';
 import { AuthProvider } from './contexts/AuthContext';
 import { ProfileProvider } from './contexts/ProfileContext';
 import { EventProvider } from './contexts/EventContext';
-import EditEvent from './routes/events/EditEvent';
 
 const App = () => {  
   return (
@@ -65,6 +66,11 @@ const App = () => {
                 </Route>
                 <Route path='*' element={<NotFound />} />
               </Route>
+              <Route path='/meeting/:room' element={
+                <ProtectedRoute>
+                  <MeetingRoom />
+                </ProtectedRoute>
+              } />
             </Routes>
           </EventProvider>
         </ProfileProvider>
