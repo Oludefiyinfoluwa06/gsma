@@ -69,17 +69,14 @@ app.delete('/api/profile/:picture', async (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    socket.on('joinRoom', ({ room }) => {
-        socket.join(room);
-        console.log(`User joined room: ${room}`);
-        socket.to(room).emit('user-connected', socket.id);
-    });
+    console.log('New client connected');
 
-    socket.on('signal', (data) => {
-        socket.to(data.room).emit('signal', data);
-    });
+    socket.on('join-room', (roomId, userId) => {
+        socket.join(roomId);
+        socket.to(roomId).emit('user-connected', userId);
 
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
+        socket.on('disconnect', () => {
+            socket.broadcast.emit('user-disconnected');
+        });
     });
 });
