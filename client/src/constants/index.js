@@ -1,4 +1,5 @@
 import { FaCalendar, FaEnvelope, FaHome, FaPlus, FaUser, FaVideo } from "react-icons/fa";
+import user from '../assets/user.png';
 
 export const styles = {
     sidebarLinks: 'p-3 w-full text-white cursor-pointer flex items-center justify-center md:justify-start gap-2 rounded-lg',
@@ -84,3 +85,7 @@ export const eventLinks = [
         label: 'Create Event',
     },
 ];
+
+export const images = {
+    user
+}

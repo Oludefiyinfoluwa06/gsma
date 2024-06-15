@@ -5,18 +5,21 @@ const { GridFsStorage } = require('multer-gridfs-storage');
 const storage = new GridFsStorage({
     url: process.env.dbURI,
     file: (req, file) => {
-        const match = ["image/png", "image/jpeg", "image/jpg"];
+        return new Promise((resolve, reject) => {
+            const fileInfo = {
+                filename: `${Date.now()}-${file.originalname}`,
+                bucketName: 'profilePictures',
+            };
 
-        if (match.indexOf(file.mimetype) === -1) {
-            const filename = `${Date.now()}-${file.originalname}`;
-            return filename;
-        }
-
-        return {
-            bucketName: 'profilePictures',
-            filename: `${Date.now()}-${file.originalname}`
-        }
-    }
+            resolve(fileInfo);
+        }).catch(err => {
+            console.log('Error: ' + err);
+        });
+    },
 });
 
-module.exports = multer({ storage: storage });
+const upload = multer({ storage });
+
+module.exports = {
+    upload
+};

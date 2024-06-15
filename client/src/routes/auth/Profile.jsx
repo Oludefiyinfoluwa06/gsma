@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { FaPencil } from 'react-icons/fa6';
 import { FaTimes } from 'react-icons/fa';
 
 import { useProfile } from '../../hooks/useProfile';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import { useNavigate } from 'react-router-dom';
+import { images } from '../../constants';
 
 const Profile = () => {
     const [showModal, setShowModal] = useState(false);
@@ -14,9 +15,16 @@ const Profile = () => {
     const { profilePictureUpload, getUserProfile, user, loading, error, setError } = useProfile();
     const navigate = useNavigate();
 
+    const [pictureUrl, setPictureUrl] = useState('');
+    const profilePic = JSON.parse(localStorage.getItem('profilePicture'));
+
     useEffect(() => {
         getUserProfile();
     }, [getUserProfile]);
+
+    useEffect(() => {
+        if (profilePic) return setPictureUrl(profilePic.imgUrl);
+    }, [profilePic]);
 
     const handleFileUpload = async (e) => {
         e.preventDefault();
@@ -24,6 +32,8 @@ const Profile = () => {
         setError('');
 
         await profilePictureUpload(profilePicture);
+        setShowModal(false);
+        alert('Profile picture updated successfully');
     }
 
     return (
@@ -34,8 +44,9 @@ const Profile = () => {
 
                     <div className='flex items-center justify-start gap-[30px] mt-4 md:flex-row flex-col'>
                         <div className='flex items-center justify-center gap-4 flex-col'>
-                            <div className='md:w-[300px] md:h-[300px] w-[130px] h-[130px] rounded-full bg-white'>
-                                <div className='transform translate-x-[100px] translate-y-[93px] md:translate-x-[230px] md:translate-y-[230px] rounded-full md:text-[25px] text-[15px] text-slate-800 bg-white md:w-[45px] md:h-[45px] flex items-center justify-center cursor-pointer w-[25px] h-[25px]' onClick={() => setShowModal(true)}>
+                            <div className='md:w-[300px] md:h-[300px] w-[130px] h-[130px] rounded-full relative'>
+                                <img src={pictureUrl ? pictureUrl : images.user} alt="Profile" className='w-full h-full rounded-full object-center object-cover' />
+                                <div className='absolute md:bottom-[30px] md:right-[30px] bottom-[15px] right-[8px] flex items-center justify-center cursor-pointer w-[25px] h-[25px] bg-white rounded-full p-2 text-slate-800 text-[30px]' onClick={() => setShowModal(true)}>
                                     <FaPencil />
                                 </div>
                             </div>

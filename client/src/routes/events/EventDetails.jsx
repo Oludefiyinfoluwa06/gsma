@@ -10,11 +10,12 @@ const EventDetails = () => {
     const [showOptions, setShowOptions] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const meetingLink = `http://localhost:3000/meeting/${id}`;
-
+    
+    const user = JSON.parse(localStorage.getItem('user'));
+    
+    const meetingLink = `http://localhost:3000/chats/${user._id}`;
 
     const { getEventDetails, event, error, setError, deleteEvent } = useEvent();
-    const user = localStorage.getItem('user');
 
     const navigate = useNavigate();
 
@@ -23,9 +24,16 @@ const EventDetails = () => {
         getEventDetails(id);
     }, [getEventDetails, id, setError]);
 
-    const handleCopyLink = (e) => {
+    const handleCopyLink = async (e) => {
         e.preventDefault();
-    }
+        try {
+            await navigator.clipboard.writeText(meetingLink);
+            setError('');
+            alert('Link copied to clipboard!');
+        } catch (err) {
+            setError('Failed to copy link. Please try again.');
+        }
+    };
 
     return (
         <>
@@ -45,9 +53,9 @@ const EventDetails = () => {
 
                             {showOptions && (
                                 <div className="absolute right-[7px] top-[22px] bg-white rounded-md text-slate-950 w-[150px] shadow-md">
-                                    {user === event.createdBy && <div className="p-2 flex items-center justify-start gap-2 cursor-pointer border-b border-gray-800" onClick={() => navigate(`/events/${id}/edit`)}><FaPencilAlt /> <p>Edit</p></div>}
+                                    {user._id === event.createdBy && <div className="p-2 flex items-center justify-start gap-2 cursor-pointer border-b border-gray-800" onClick={() => navigate(`/events/${id}/edit`)}><FaPencilAlt /> <p>Edit</p></div>}
 
-                                    {user === event.createdBy && <div className="p-2 flex items-center justify-start gap-2 cursor-pointer border-b border-gray-800" onClick={() => setShowDeleteModal(true)}><FaTrash /> <p>Delete</p></div>}
+                                    {user._id === event.createdBy && <div className="p-2 flex items-center justify-start gap-2 cursor-pointer border-b border-gray-800" onClick={() => setShowDeleteModal(true)}><FaTrash /> <p>Delete</p></div>}
 
                                     <div className="p-2 flex items-center justify-start gap-2 cursor-pointer" onClick={() => setShowModal(true)}><FaShare /> <p>Share</p></div>
                                 </div>
@@ -56,7 +64,7 @@ const EventDetails = () => {
                     </div>
                     <p className="mt-2">{event.description}</p>
 
-                    {user === event.createdBy ? <button className='mt-3 text-[18px] font-bold bg-slate-100 text-slate-800 px-[20px] py-[8px] rounded-lg' onClick={() => navigate(`/meeting/${id}`)}>Start meeting</button> : <button className='mt-3 text-[18px] font-bold bg-slate-100 text-slate-800 px-[20px] py-[8px] rounded-lg' onClick={() => navigate(`/meeting/${id}`)}>Join meeting</button>}
+                    {user._id === event.createdBy ? <button className='mt-3 text-[18px] font-bold bg-slate-100 text-slate-800 px-[20px] py-[8px] rounded-lg' onClick={() => navigate(`/chats/${user._id}`)}>Start meeting</button> : <button className='mt-3 text-[18px] font-bold bg-slate-100 text-slate-800 px-[20px] py-[8px] rounded-lg' onClick={() => navigate(`/chats/${user._id}`)}>Join meeting</button>}
                 </div>
             </div>
 

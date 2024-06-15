@@ -91,14 +91,14 @@ const ChatRoom = () => {
 
     return (
         <div className="flex flex-col h-screen p-6 bg-gray-900 text-white">
-            <div className="flex-1 overflow-y-auto mb-4">
+            <div className="flex-1 overflow-y-auto mb-4 space-y-2 no-scrollbar">
                 {messages.map((msg) => (
                     <div
                         key={msg._id}
-                        className={`p-2 rounded-md mb-2 ${
+                        className={`p-2 rounded-md max-w-xs break-words ${
                             msg.user === user._id
-                                ? 'bg-blue-500 self-end'
-                                : 'bg-gray-700 self-start'
+                                ? 'bg-blue-500 ml-auto text-right'
+                                : 'bg-gray-700 mr-auto text-left'
                         }`}
                     >
                         <strong>{msg.user === user._id ? 'You' : otherUser[msg.user] || 'Unknown User'}: </strong>
@@ -106,6 +106,7 @@ const ChatRoom = () => {
                     </div>
                 ))}
             </div>
+
             <form onSubmit={handleSendMessage} className="flex items-center">
                 <input
                     type="text"

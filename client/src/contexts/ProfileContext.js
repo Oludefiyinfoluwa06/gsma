@@ -98,17 +98,17 @@ export const ProfileProvider = ({ children }) => {
         formData.append('profilePicture', picture);
         
         try {
-            const response = await axios.post('http://localhost:5000/api/profile/picture-upload', formData, {
+            const response = await axios.post('http://localhost:5000/api/pictures/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`
                 }
             });
 
-            console.log(response);
+            localStorage.setItem('profilePicture', JSON.stringify(response.data.profilePic));
         } catch (error) {
             console.log(error);
-            // setError(error.response.data.error);
+            setError(error.response.data.error);
         } finally {
             setLoading(false);
         }

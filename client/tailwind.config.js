@@ -12,5 +12,34 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  variants: {
+    extend: {
+      scrollbar: ['rounded']
+    },
+  },
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.scrollbar-thin': {
+          'scrollbar-width': 'thin',
+        },
+        '.scrollbar-thumb': {
+          'scrollbar-color': '#4A5568 #EDF2F7',
+        },
+        '.scrollbar-thumb-rounded': {
+          'scrollbar-color': '#4A5568 #EDF2F7',
+          'scrollbar-width': 'thin',
+        },
+        '.scrollbar-thumb-width': {
+          '&::-webkit-scrollbar': {
+            width: '8px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#4A5568',
+            borderRadius: '4px',
+          },
+        },
+      });
+    }
+  ],
 }

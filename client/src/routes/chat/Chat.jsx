@@ -43,7 +43,7 @@ const Chat = () => {
                     type='text'
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder='Search for people...'
+                    placeholder="Search for event chats by creator's name..."
                     className='w-full p-2 rounded-md outline-none text-black'
                 />
                 <button type='submit' className='mt-1 p-2 bg-blue-500 text-white rounded-md absolute right-1'>
