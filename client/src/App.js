@@ -12,6 +12,7 @@ import CreateEvent from './routes/events/CreateEvent';
 import EventDetails from './routes/events/EventDetails';
 import EditEvent from './routes/events/EditEvent';
 import Chat from './routes/chat/Chat';
+import ChatRoom from './routes/chat/ChatRoom';
 import Profile from './routes/auth/Profile';
 import ProfileSetup from './routes/auth/ProfileSetup';
 import ProfileUpdate from './routes/auth/ProfileUpdate';
@@ -23,6 +24,7 @@ import NotFound from './components/404';
 import RootLayout from './layouts/RootLayout';
 import EventLayout from './layouts/EventLayout';
 import ProfileLayout from './layouts/ProfileLayout';
+import ChatLayout from './layouts/ChatLayout';
 
 import { AuthProvider } from './contexts/AuthContext';
 import { ProfileProvider } from './contexts/ProfileContext';
@@ -58,7 +60,10 @@ const App = () => {
                   <Route path=':id' element={<EventDetails />} />
                   <Route path=':id/edit' element={<EditEvent />} />
                 </Route>
-                <Route path='chats' element={<Chat />} />
+                <Route path='chats' element={<ChatLayout />}>
+                  <Route index element={<Chat />} />
+                  <Route path=':room' element={<ChatRoom />} />
+                </Route>
                 <Route path='profile' element={<ProfileLayout />}>
                   <Route index element={<Profile />} />
                   <Route path='setup' element={<ProfileSetup />} />

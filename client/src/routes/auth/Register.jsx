@@ -4,6 +4,7 @@ import { useAuth } from '../../hooks/useAuth';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 const Register = () => {
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -16,7 +17,7 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        await signup(email, password);
+        await signup(username, email, password);
     }
 
     return (
@@ -29,6 +30,21 @@ const Register = () => {
                     </div>
 
                     {error && <p className="text-textError bg-bgError w-full p-2 rounded-md my-[7px]">{error}</p>}
+                    
+                    <div className="flex flex-col mb-2 gap-3 w-full">
+                        <label htmlFor="username" className='text-white'>Username</label>
+                        <input
+                            type="username"
+                            name="username"
+                            id="username"
+                            value={username}
+                            onChange={(e) => {
+                                setUsername(e.target.value);
+                                setError('');
+                            }}
+                            className="bg-slate-100 outline-none py-[5px] px-[7px] rounded-md text-[16px]"
+                        />
+                    </div>
                     
                     <div className="flex flex-col mb-2 gap-3 w-full">
                         <label htmlFor="email" className='text-white'>Email</label>

@@ -13,7 +13,7 @@ const createToken = (id) => {
 }
 
 const signup = async (req, res) => {
-    const { email, password } = req.body;
+    const { username, email, password } = req.body;
 
     if (email === '' || password === '') return res.status(400).json({ error: 'Input fields cannot be empty' });
 
@@ -28,11 +28,11 @@ const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
 
-    const user = await User.create({ email, password: hash });
+    const user = await User.create({ username, email, password: hash });
 
     const token = createToken(user._id);
 
-    return res.status(201).json({ message: 'Registration successful', token, user: user._id });
+    return res.status(201).json({ message: 'Registration successful', token, user });
 }
 
 const login = async (req, res) => {
@@ -50,7 +50,7 @@ const login = async (req, res) => {
 
     const token = createToken(user._id);
 
-    return res.status(200).json({ message: 'Login successful', token, user: user._id });
+    return res.status(200).json({ message: 'Login successful', token, user });
 }
 
 const getOtp = async (req, res) => {

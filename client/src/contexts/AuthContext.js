@@ -11,14 +11,14 @@ export const AuthProvider = ({ children }) => {
 
     const navigate = useNavigate();
 
-    const signup = async (email, password) => {
+    const signup = async (username, email, password) => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/signup', { email, password });
+            const response = await axios.post('http://localhost:5000/api/auth/signup', { username, email, password });
 
             localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', response.data.user);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
             navigate('/');
         } catch (error) {
             setError(error.response.data.error);
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
 
             localStorage.setItem('token', response.data.token);
-            localStorage.setItem('user', response.data.user);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
             navigate('/');
         } catch (error) {
             setError(error.response.data.error);

@@ -9,6 +9,7 @@ const { Server } = require('socket.io');
 const authRoutes = require('./routes/authRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const eventRoutes = require('./routes/eventRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 
 require('dotenv').config();
 
@@ -46,6 +47,7 @@ app.get('/', (req, res) => res.send('Hello World!'));
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/chats', chatRoutes);
 
 app.get('/api/profile/:picture', async (req, res) => {
     try {
@@ -69,14 +71,18 @@ app.delete('/api/profile/:picture', async (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    console.log('New client connected');
+    console.log('a user connected');
 
-    socket.on('join-room', (roomId, userId) => {
-        socket.join(roomId);
-        socket.to(roomId).emit('user-connected', userId);
+    socket.on('joinRoom', ({ room }) => {
+        socket.join(room);
+        console.log(`User joined room: ${room}`);
+    });
 
-        socket.on('disconnect', () => {
-            socket.broadcast.emit('user-disconnected');
-        });
+    socket.on('chatMessage', (message) => {
+        io.to(message.room).emit('chatMessage', message);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
     });
 });

@@ -37,13 +37,13 @@ export const ProfileProvider = ({ children }) => {
         }
     }
 
-    const profileSetup = async (username, fullname, institutionName, major, yearOfStudy, studentId) => {
+    const profileSetup = async (firstname, lastname, institutionName, major, yearOfStudy, studentId) => {
         const token = localStorage.getItem('token');
 
         setLoading(true);
 
         try {
-            await axios.post('http://localhost:5000/api/profile/profile-setup', { username, fullname, institutionName, major, yearOfStudy, studentId }, {
+            await axios.post('http://localhost:5000/api/profile/profile-setup', { firstname, lastname, institutionName, major, yearOfStudy, studentId }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -63,13 +63,13 @@ export const ProfileProvider = ({ children }) => {
         }
     }
 
-    const profileUpdate = async (username, fullname, institutionName, major, yearOfStudy, studentId) => {
+    const profileUpdate = async (firstname, lastname, institutionName, major, yearOfStudy, studentId) => {
         const token = localStorage.getItem('token');
 
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/profile/profile-update', { username, fullname, institutionName, major, yearOfStudy, studentId }, {
+            const response = await axios.post('http://localhost:5000/api/profile/profile-update', { firstname, lastname, institutionName, major, yearOfStudy, studentId }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

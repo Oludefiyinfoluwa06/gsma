@@ -51,7 +51,7 @@ const Profile = () => {
                                 </div>
                                 <div className='w-full space-y-2 flex items-start justify-center flex-col'>
                                     <p className='text-[23px] font-bold'>Full name</p>
-                                    <p className='text-[15px]'>{user.fullname}</p>
+                                    <p className='text-[15px]'>{user.lastname} {user.firstname}</p>
                                 </div>
                             </div>
 

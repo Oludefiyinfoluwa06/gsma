@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ProfileUpdate = () => {
-    const [username, setUsername] = useState('');
-    const [fullname, setFullname] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
     const [institutionName, setInstitutionName] = useState('');
     const [major, setMajor] = useState('');
     const [yearOfStudy, setYearOfStudy] = useState('');
@@ -28,8 +28,8 @@ const ProfileUpdate = () => {
                     }
                 });
 
-                setUsername(response.data.profile.username);
-                setFullname(response.data.profile.fullname);
+                setFirstname(response.data.profile.firstname);
+                setLastname(response.data.profile.lastname);
                 setInstitutionName(response.data.profile.institutionName);
                 setMajor(response.data.profile.major);
                 setYearOfStudy(response.data.profile.yearOfStudy);
@@ -53,7 +53,7 @@ const ProfileUpdate = () => {
 
         setError('');
 
-        await profileUpdate(username, fullname, institutionName, major, yearOfStudy, studentId);
+        await profileUpdate(firstname, lastname, institutionName, major, yearOfStudy, studentId);
         navigate('/profile');
     }
 
@@ -65,14 +65,14 @@ const ProfileUpdate = () => {
 
             <div className='flex items-center justify-start gap-4 w-full mt-[15px] flex-wrap sm:flex-nowrap'>
                 <div className="flex flex-col mb-2 gap-3 w-full sm:w-1/2">
-                    <label htmlFor="username" className='text-white'>Username</label>
+                    <label htmlFor="firstname" className='text-white'>Firstname</label>
                     <input
                         type="text"
-                        name="username"
-                        id="username"
-                        value={username}
+                        name="firstname"
+                        id="firstname"
+                        value={firstname}
                         onChange={(e) => {
-                            setUsername(e.target.value);
+                            setFirstname(e.target.value);
                             setError('');
                         }}
                         className="bg-slate-100 outline-none py-[5px] px-[7px] rounded-md text-[16px]"
@@ -80,14 +80,14 @@ const ProfileUpdate = () => {
                 </div>
 
                 <div className="flex flex-col mb-2 gap-3 w-full sm:w-1/2">
-                    <label htmlFor="fullname" className='text-white'>Full name</label>
+                    <label htmlFor="lastname" className='text-white'>Lastname</label>
                     <input
                         type="text"
-                        name="fullname"
-                        id="fullname"
-                        value={fullname}
+                        name="lastname"
+                        id="lastname"
+                        value={lastname}
                         onChange={(e) => {
-                            setFullname(e.target.value);
+                            setLastname(e.target.value);
                             setError('');
                         }}
                         className="bg-slate-100 outline-none py-[5px] px-[7px] rounded-md text-[16px]"
