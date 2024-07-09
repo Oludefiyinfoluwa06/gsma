@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
+import Home from './routes/Home';
 import Login from './routes/auth/Login';
 import Register from './routes/auth/Register';
 import ForgotPassword from './routes/auth/ForgotPassword';
 import ResetPassword from './routes/auth/ResetPassword';
-import Home from './routes/Home';
+import Dashboard from './routes/Dashboard';
 import AllEvents from './routes/events/AllEvents';
 import MyEvents from './routes/events/MyEvents';
 import CreateEvent from './routes/events/CreateEvent';
@@ -37,6 +38,7 @@ const App = () => {
         <ProfileProvider>
           <EventProvider>
             <Routes>
+              <Route path='/' element={<Home />} />
               <Route path='/login' element={<PrivateRoute>
                 <Login />
               </PrivateRoute>} />
@@ -49,10 +51,10 @@ const App = () => {
               <Route path='/reset-password' element={<PrivateRoute>
                 <ResetPassword />
               </PrivateRoute>} />
-              <Route path='/' element={<ProtectedRoute>
+              <Route path='/dashboard' element={<ProtectedRoute>
                 <RootLayout />
               </ProtectedRoute>}>
-                <Route index element={<Home />} />
+                <Route index element={<Dashboard />} />
                 <Route path='events' element={<EventLayout />}>
                   <Route index element={<AllEvents />} />
                   <Route path='my-events' element={<MyEvents />} />

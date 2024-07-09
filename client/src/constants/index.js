@@ -10,8 +10,8 @@ export const styles = {
 export const sidebarLinks = [
     {
         id: 1,
-        route: '/',
-        label: 'Home',
+        route: '/dashboard',
+        label: 'Dashboard',
         icon: <FaHome className={`${styles.sidebarIcons}`} />
     },
     {
