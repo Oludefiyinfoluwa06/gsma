@@ -38,7 +38,7 @@ const App = () => {
         <ProfileProvider>
           <EventProvider>
             <Routes>
-              <Route path='/' element={<Home />} />
+              <Route path='/home' element={<Home />} />
               <Route path='/login' element={<PrivateRoute>
                 <Login />
               </PrivateRoute>} />
@@ -51,7 +51,7 @@ const App = () => {
               <Route path='/reset-password' element={<PrivateRoute>
                 <ResetPassword />
               </PrivateRoute>} />
-              <Route path='/dashboard' element={<ProtectedRoute>
+              <Route path='/' element={<ProtectedRoute>
                 <RootLayout />
               </ProtectedRoute>}>
                 <Route index element={<Dashboard />} />

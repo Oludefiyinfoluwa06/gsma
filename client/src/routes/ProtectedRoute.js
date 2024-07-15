@@ -19,5 +19,5 @@ export const PrivateRoute = ({ children }) => {
         return children;
     }
     
-    return <Navigate to='/dashboard' replace />
+    return <Navigate to='/' replace />
 }
