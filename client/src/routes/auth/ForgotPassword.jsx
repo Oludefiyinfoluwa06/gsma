@@ -30,7 +30,7 @@ const ForgotPassword = () => {
         <div className="p-[30px] flex items-center justify-center min-h-screen">
             <div className="flex flex-row items-center justify-center">
                 {!next && <form className="w-[350px] sm:w-[500px] lg:w-[600px] border h-full flex flex-col items-center justify-center p-[30px]" onSubmit={handleGetOtp}>
-                    <div className="text-center mb-2">
+                    <div className="text-center flex items-center justify-center flex-col mb-2">
                         <img src={logo} alt="" width={80} height={80} />
                         <h1 className="text-[25px] sm:text-[40px] font-bold text-slate-800">Get OTP</h1>
                     </div>

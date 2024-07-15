@@ -25,7 +25,7 @@ const Register = () => {
         <div className="p-[30px] flex items-center justify-center min-h-screen bg-slate-900">
             <div className="flex flex-row items-center justify-center">
                 <form className="w-[350px] sm:w-[500px] lg:w-[600px] border h-full flex flex-col items-center justify-center p-[30px] rounded-lg" onSubmit={handleRegister}>
-                    <div className="text-center mb-2">
+                    <div className="text-center flex items-center justify-center flex-col mb-2">
                         <img src={logo} alt="" width={80} height={80} />
                         <h1 className="text-[25px] sm:text-[40px] font-bold text-white">Create an account</h1>
                     </div>
