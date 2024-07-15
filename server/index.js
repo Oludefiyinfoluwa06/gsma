@@ -57,6 +57,8 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/chats', chatRoutes);
 
+app.get('/', (req, res) => res.send('Hello world'));
+
 app.post('/api/pictures/upload', authenticate, upload.single('profilePicture'), async (req, res) => {
 
     if (!req.file) {
