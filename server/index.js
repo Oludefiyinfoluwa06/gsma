@@ -20,7 +20,10 @@ const port = process.env.PORT || 5000;
 
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {}
+    cors: {
+        origin: 'https://gsma-client.vercel.app',
+        methods: ['GET', 'POST']
+    }
 });
 
 app.use(cors());
