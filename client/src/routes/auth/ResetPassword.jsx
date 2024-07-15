@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import logo from '../../assets/logo.png';
 
 const ResetPassword = () => {
     const [password, setPassword] = useState('');
@@ -22,7 +23,7 @@ const ResetPassword = () => {
             <div className="flex flex-row items-center justify-center">
                 <form className="w-[350px] sm:w-[500px] lg:w-[600px] border h-full flex flex-col items-center justify-center p-[30px]" onSubmit={handleResetPassword}>
                     <div className="text-center mb-2">
-                        <p className='text-xl'>LOGO</p>
+                        <img src={logo} alt="" width={80} height={80} />
                         <h1 className="text-[25px] sm:text-[40px] font-bold text-slate-800">Reset your password</h1>
                     </div>
 

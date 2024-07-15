@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
+import logo from '../../assets/logo.png';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -25,7 +26,7 @@ const Register = () => {
             <div className="flex flex-row items-center justify-center">
                 <form className="w-[350px] sm:w-[500px] lg:w-[600px] border h-full flex flex-col items-center justify-center p-[30px] rounded-lg" onSubmit={handleRegister}>
                     <div className="text-center mb-2">
-                        <p className='text-xl text-white'>LOGO</p>
+                        <img src={logo} alt="" width={80} height={80} />
                         <h1 className="text-[25px] sm:text-[40px] font-bold text-white">Create an account</h1>
                     </div>
 
