@@ -1,15 +1,13 @@
 {
-    "version": 2,
-    "builds": [
-        { "src": "*.js", "use": "@vercel/node" }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/"
-        }
-    ],
-    "build": {
-        "command": "npm install --force && npm run build"
+  "version": 2,
+  "builds": [
+    { "src": "*.js", "use": "@vercel/node" },
+    { "src": "package.json", "use": "@vercel/static-build", "config": { "command": "npm install --force && npm run build" } }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
     }
+  ]
 }
