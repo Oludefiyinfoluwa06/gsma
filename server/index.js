@@ -40,8 +40,7 @@ mongoose.connect(process.env.dbURI)
         });
     })
     .catch(err => {
-        console.error('MongoDB connection error:', err);
-        process.exit(1);
+        console.log('MongoDB connection error:', err);
     });
 
 let bucket;
