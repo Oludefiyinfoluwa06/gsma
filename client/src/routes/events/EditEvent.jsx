@@ -19,7 +19,7 @@ const EditEvent = () => {
     useEffect(() => {
         const getEventDetails = async () => {
             try { 
-                const response = await axios.get(`http://localhost:5000/api/events/${id}`, {
+                const response = await axios.get(`https://gsma-server.vercel.app/api/events/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

@@ -22,7 +22,7 @@ const ProfileUpdate = () => {
 
         const getUserProfile = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/profile', {
+                const response = await axios.get('https://gsma-server.vercel.app/api/profile', {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

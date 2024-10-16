@@ -15,7 +15,7 @@ export const ProfileProvider = ({ children }) => {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await axios.get('http://localhost:5000/api/profile', {
+            const response = await axios.get('https://gsma-server.vercel.app/api/profile', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -43,7 +43,7 @@ export const ProfileProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            await axios.post('http://localhost:5000/api/profile/profile-setup', { firstname, lastname, institutionName, major, yearOfStudy, studentId }, {
+            await axios.post('https://gsma-server.vercel.app/api/profile/profile-setup', { firstname, lastname, institutionName, major, yearOfStudy, studentId }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -69,7 +69,7 @@ export const ProfileProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/profile/profile-update', { firstname, lastname, institutionName, major, yearOfStudy, studentId }, {
+            const response = await axios.post('https://gsma-server.vercel.app/api/profile/profile-update', { firstname, lastname, institutionName, major, yearOfStudy, studentId }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -98,7 +98,7 @@ export const ProfileProvider = ({ children }) => {
         formData.append('profilePicture', picture);
         
         try {
-            const response = await axios.post('http://localhost:5000/api/pictures/upload', formData, {
+            const response = await axios.post('https://gsma-server.vercel.app/api/pictures/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Authorization': `Bearer ${token}`

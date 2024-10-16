@@ -64,7 +64,7 @@ app.post('/api/pictures/upload', authenticate, upload.single('profilePicture'), 
         return res.status(400).json({ error: 'No file uploaded.' });
     }
 
-    const imgUrl = `http://localhost:5000/api/pictures/${req.file.id}`;
+    const imgUrl = `https://gsma-server.vercel.app/api/pictures/${req.file.id}`;
 
     const newImage = new Image({
         userId: req.user._id,

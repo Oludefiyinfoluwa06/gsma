@@ -19,7 +19,7 @@ export const EventProvider = ({ children }) => {
         setLoading(true);
 
         try { 
-            await axios.post('http://localhost:5000/api/events/create', { title, description, date }, {
+            await axios.post('https://gsma-server.vercel.app/api/events/create', { title, description, date }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -35,7 +35,7 @@ export const EventProvider = ({ children }) => {
 
     const getAllEvents = async () => {
         try { 
-            const response = await axios.get('http://localhost:5000/api/events/all', {
+            const response = await axios.get('https://gsma-server.vercel.app/api/events/all', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -49,7 +49,7 @@ export const EventProvider = ({ children }) => {
 
     const getMyEvents = async () => {
         try { 
-            const response = await axios.get('http://localhost:5000/api/events/my-events', {
+            const response = await axios.get('https://gsma-server.vercel.app/api/events/my-events', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -63,7 +63,7 @@ export const EventProvider = ({ children }) => {
 
     const getEventDetails = async (eventId) => {
         try { 
-            const response = await axios.get(`http://localhost:5000/api/events/${eventId}`, {
+            const response = await axios.get(`https://gsma-server.vercel.app/api/events/${eventId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -80,7 +80,7 @@ export const EventProvider = ({ children }) => {
         setLoading(true);
 
         try { 
-            await axios.post(`http://localhost:5000/api/events/${id}/edit`, { title, description, date }, {
+            await axios.post(`https://gsma-server.vercel.app/api/events/${id}/edit`, { title, description, date }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -96,7 +96,7 @@ export const EventProvider = ({ children }) => {
 
     const deleteEvent = async (id) => {
         try { 
-            await axios.delete(`http://localhost:5000/api/events/${id}/delete`, {
+            await axios.delete(`https://gsma-server.vercel.app/api/events/${id}/delete`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

@@ -20,7 +20,7 @@ const Chat = () => {
         }
 
         try {
-            const response = await axios.get(`http://localhost:5000/api/chats/search/${query}`, {
+            const response = await axios.get(`https://gsma-server.vercel.app/api/chats/search/${query}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

@@ -16,7 +16,7 @@ const ChatRoom = () => {
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/chats/${room}`, {
+                const response = await axios.get(`https://gsma-server.vercel.app/api/chats/${room}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -45,7 +45,7 @@ const ChatRoom = () => {
     useEffect(() => {
         const fetchOtherUser = async (userId) => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/profile/${userId}`, {
+                const response = await axios.get(`https://gsma-server.vercel.app/api/profile/${userId}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -72,7 +72,7 @@ const ChatRoom = () => {
 
         if (message.trim()) {
             try {
-                const response = await axios.post('http://localhost:5000/api/chats', {
+                const response = await axios.post('https://gsma-server.vercel.app/api/chats', {
                     room,
                     message
                 }, {

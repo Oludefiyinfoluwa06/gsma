@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/signup', { username, email, password });
+            const response = await axios.post('https://gsma-server.vercel.app/api/auth/signup', { username, email, password });
 
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            const response = await axios.post('https://gsma-server.vercel.app/api/auth/login', { email, password });
 
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/get-otp', { email });
+            const response = await axios.post('https://gsma-server.vercel.app/api/auth/get-otp', { email });
 
             if (response) {
                 localStorage.setItem('otp', response.data.otp);
@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }) => {
         const email = localStorage.getItem('email');
 
         try {
-            await axios.put('http://localhost:5000/api/auth/reset-password', { email, password });
+            await axios.put('https://gsma-server.vercel.app/api/auth/reset-password', { email, password });
 
             localStorage.removeItem('email');
             navigate('/login');
