@@ -16,9 +16,9 @@ const HomeCard = () => {
 
         if (!eventId) return setError('Input the event\'s id');
 
-        navigate(`/meeting/${eventId}`);
+        navigate(`/chats/${eventId}`);
     }
-    
+
     return (
         <>
             <div className="flex items-start justify-start gap-[20px] flex-wrap mt-[20px]">
